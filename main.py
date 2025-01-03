@@ -194,14 +194,13 @@ class EverythingGUI(QMainWindow):
         if last_db and os.path.exists(os.path.join(self.db_folder, last_db)):
             self.db_path = os.path.join(self.db_folder, last_db)
             self.conn = sqlite3.connect(self.db_path)
-            self.create_tables()
             print(f"加载上次数据库: {self.db_path}")
         else:
             # 如果没有找到最后使用的数据库，则创建新的
             current_time = datetime.now().strftime('%Y-%m-%d_%H-%M-%S.db')
             self.db_path = os.path.join(self.db_folder, current_time)
             self.conn = sqlite3.connect(self.db_path)
-            self.create_tables()
+            self.create_tables()  # 只在创建新数据库时创建表
             print(f"创建新数据库: {self.db_path}")
         
         # 保存当前数据库路径
