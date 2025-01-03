@@ -86,7 +86,7 @@ class FastIndexWorker(QThread):
                                         attrs = win32file.GetFileAttributes(full_path)
                                         is_hidden = attrs & win32file.FILE_ATTRIBUTE_HIDDEN
                                         is_system = attrs & win32file.FILE_ATTRIBUTE_SYSTEM
-                                        if not (is_hidden or is_system):
+                                        if not is_hidden and not is_system:
                                             stats = os.stat(full_path)
                                             batch.append((
                                                 full_path,
