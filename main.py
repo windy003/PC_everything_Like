@@ -156,11 +156,24 @@ class FastIndexWorker(QThread):
                 os.remove(temp_db)
             self.finished.emit("", 0)
 
+def resource_path(relative_path):
+    """获取资源的绝对路径"""
+    try:
+        # PyInstaller 创建临时文件夹 _MEIxxxxxx
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    
+    return os.path.join(base_path, relative_path)
+
 class EverythingGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        # 设置应用图标
-        self.icon = QIcon('icon.png')
+        # 使用 resource_path 获取图标路径
+        icon_path = resource_path('icon.png')
+        print(f"图标路径: {icon_path}")
+        
+        self.icon = QIcon(icon_path)
         self.setWindowIcon(self.icon)
         
         # 创建数据库目录
